@@ -1,19 +1,36 @@
 import requests
 
-# URL do webhook do Discord
-WEBHOOK_URL = "https://discord.com/api/webhooks/1346506380193955964/FEFFFFWBQZonSNI9-zfxuLOtKwLXVHl1MoJ1K5PThEsPteDeWPWOLN2VC5TL-0oVVDMW"
+# Título estilizado
+titulo = """
+$$$$$$$\  $$$$$$$\   $$$$$$\  $$\      $$\       $$$$$$$\  $$$$$$\  $$$$$$\   $$$$$$\   $$$$$$\  $$$$$$$\  $$$$$$$\  
+$$  __$$\ $$  __$$\ $$  __$$\ $$$\    $$$ |      $$  __$$\ \_$$  _|$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ 
+$$ /  \__|$$ |  $$ |$$ /  $$ |$$$$\  $$$$ |      $$ |  $$ |  $$ |  $$ /  \__|$$ /  \__|$$ /  $$ |$$ |  $$ |$$ |  $$ |
+\$$$$$$\  $$$$$$$  |$$$$$$$$ |$$\$$\$$ $$ |      $$ |  $$ |  $$ |  \$$$$$$\  $$ |      $$ |  $$ |$$$$$$$  |$$ |  $$ |
+ \____$$\ $$  ____/ $$  __$$ |$$ \$$$  $$ |      $$ |  $$ |  $$ |   \____$$\ $$ |      $$ |  $$ |$$  __$$< $$ |  $$ |
+$$\   $$ |$$ |      $$ |  $$ |$$ |\$  /$$ |      $$ |  $$ |  $$ |  $$\   $$ |$$ |  $$\ $$ |  $$ |$$ |  $$ |$$ |  $$ |
+\$$$$$$  |$$ |      $$ |  $$ |$$ | \_/ $$ |      $$$$$$$  |$$$$$$\ \$$$$$$  |\$$$$$$  | $$$$$$  |$$ |  $$ |$$$$$$$  |
+ \______/ \__|      \__|  \__|\__|     \__|      \_______/ \______| \______/  \______/  \______/ \__|  \__|\_______/ 
+"""
 
-def enviar_mensagem(mensagem):
+# Função para enviar a mensagem
+def enviar_mensagem(webhook_url, mensagem):
     data = {"content": mensagem}
     headers = {"Content-Type": "application/json"}
     print(f"Enviando mensagem: {mensagem}")  # Verificar a mensagem antes de enviar
-    response = requests.post(WEBHOOK_URL, json=data, headers=headers)
+    response = requests.post(webhook_url, json=data, headers=headers)
     
     if response.status_code in [200, 204]:
         print(f"Mensagem enviada: {mensagem}")
     else:
         print(f"Erro ao enviar mensagem: {response.status_code} - {response.text}")
 
+# Exibe o título
+print(titulo)
+
+# Solicita o webhook do usuário
+webhook_url = input("Digite o webhook do Discord: ")
+
+# Loop para enviar mensagens
 if __name__ == "__main__":
     print("Digite suas mensagens para o webhook do Discord. Digite 'sair' para encerrar.")
     
@@ -24,4 +41,4 @@ if __name__ == "__main__":
         if mensagem.lower() == "sair":
             print("Encerrando...")
             break
-        enviar_mensagem(mensagem)
+        enviar_mensagem(webhook_url, mensagem)
