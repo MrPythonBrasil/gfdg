@@ -1,7 +1,7 @@
 import requests
 
 # URL do webhook do Discord
-WEBHOOK_URL = "https://discord.com/api/webhooks/1345154913939755028/4zqGCotnTDuZa5eBMAnimEuJYZTqTGjcIyrCkvvmC862M4D3bfv0wE048bbFMn4PQ2y3"
+WEBHOOK_URL = "https://discord.com/api/webhooks/1346506380193955964/FEFFFFWBQZonSNI9-zfxuLOtKwLXVHl1MoJ1K5PThEsPteDeWPWOLN2VC5TL-0oVVDMW"
 
 def enviar_mensagem(mensagem):
     data = {"content": mensagem}
