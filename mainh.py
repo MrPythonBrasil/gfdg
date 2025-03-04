@@ -1,56 +1,64 @@
-import requests
+pip install colorama
+
 import os
-import shutil
+from colorama import Fore, Back, Style, init
 
-# Função para centralizar o texto
-def centralizar_texto(texto):
-    # Pega a largura do terminal
-    largura_terminal = shutil.get_terminal_size().columns
-    # Centraliza o texto calculando a posição correta
-    return texto.center(largura_terminal)
+# Inicializa o colorama
+init(autoreset=True)
 
-# Função para colorir o texto de azul
-def colorir_texto_azul(texto):
-    return f"\033[34m{texto}\033[0m"  # Código ANSI para azul
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-# Título estilizado
-titulo = """
- __    __    ___    ___  ____   __ __   ___    ___   __  _ 
-|  |__|  |  /  _]  /  _]|    \ |  |  | /   \  /   \ |  |/ ] 
-|  |  |  | /  [_  /  [_ |  o  )|  |  ||     ||     ||  ' /  
-|  |  |  ||    _]|    _]|     ||  _  ||  O  ||  O  ||    \  
-|  `  '  ||   [_ |   [_ |  O  ||  |  ||     ||     ||     | 
- \      / |     ||     ||     ||  |  ||     ||     ||  .  | 
-  \_/\_/  |_____||_____||_____||__|__| \___/  \___/ |__|\_| 
-"""
+def mostrar_titulo():
+    print(Fore.YELLOW + Back.BLACK + Style.BRIGHT + "Calculadora Super Eficiente!")
+    print(Fore.CYAN + "Escolha uma operação:")
 
-# Função para enviar a mensagem
-def enviar_mensagem(webhook_url, mensagem):
-    data = {"content": mensagem}
-    headers = {"Content-Type": "application/json"}
-    print(f"Enviando mensagem: {mensagem}")  # Verificar a mensagem antes de enviar
-    response = requests.post(webhook_url, json=data, headers=headers)
-    
-    if response.status_code in [200, 204]:
-        print(f"Mensagem enviada: {mensagem}")
-    else:
-        print(f"Erro ao enviar mensagem: {response.status_code} - {response.text}")
+def mostrar_opcoes():
+    print(Fore.GREEN + "1. Adição (+)")
+    print(Fore.GREEN + "2. Subtração (-)")
+    print(Fore.GREEN + "3. Multiplicação (*)")
+    print(Fore.GREEN + "4. Divisão (/)")
+    print(Fore.RED + "5. Sair")
 
-# Exibe o título centralizado e em azul
-print(colorir_texto_azul(centralizar_texto(titulo)))
-
-# Solicita o webhook do usuário
-webhook_url = input("Digite o webhook do Discord: ")
-
-# Loop para enviar mensagens
-if __name__ == "__main__":
-    print("Digite suas mensagens para o webhook do Discord. Digite 'sair' para encerrar.")
-    
+def realizar_calculo():
     while True:
-        mensagem = input("Você: ")  # Solicitação para digitar a mensagem
-        if not mensagem:
-            print("Por favor, digite uma mensagem!")  # Caso o usuário não digite nada
-        if mensagem.lower() == "sair":
-            print("Encerrando...")
-            break
-        enviar_mensagem(webhook_url, mensagem)
+        limpar_tela()
+        mostrar_titulo()
+        mostrar_opcoes()
+
+        try:
+            escolha = int(input(Fore.MAGENTA + "Digite o número da operação desejada: "))
+
+            if escolha == 5:
+                print(Fore.BLUE + "Saindo da calculadora. Até mais!")
+                break
+
+            if escolha < 1 or escolha > 5:
+                print(Fore.RED + "Opção inválida! Tente novamente.")
+                continue
+
+            num1 = float(input(Fore.CYAN + "Digite o primeiro número: "))
+            num2 = float(input(Fore.CYAN + "Digite o segundo número: "))
+
+            if escolha == 1:
+                resultado = num1 + num2
+                print(Fore.GREEN + f"O resultado de {num1} + {num2} é: {resultado}")
+            elif escolha == 2:
+                resultado = num1 - num2
+                print(Fore.GREEN + f"O resultado de {num1} - {num2} é: {resultado}")
+            elif escolha == 3:
+                resultado = num1 * num2
+                print(Fore.GREEN + f"O resultado de {num1} * {num2} é: {resultado}")
+            elif escolha == 4:
+                if num2 == 0:
+                    print(Fore.RED + "Erro! Divisão por zero.")
+                else:
+                    resultado = num1 / num2
+                    print(Fore.GREEN + f"O resultado de {num1} / {num2} é: {resultado}")
+        except ValueError:
+            print(Fore.RED + "Entrada inválida! Por favor, digite números válidos.")
+        
+        input(Fore.YELLOW + "\nPressione Enter para continuar...")
+
+if __name__ == "__main__":
+    realizar_calculo()
