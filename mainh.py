@@ -1,4 +1,17 @@
 import requests
+import os
+import shutil
+
+# Função para centralizar o texto
+def centralizar_texto(texto):
+    # Pega a largura do terminal
+    largura_terminal = shutil.get_terminal_size().columns
+    # Centraliza o texto calculando a posição correta
+    return texto.center(largura_terminal)
+
+# Função para colorir o texto de azul
+def colorir_texto_azul(texto):
+    return f"\033[34m{texto}\033[0m"  # Código ANSI para azul
 
 # Título estilizado
 titulo = """
@@ -24,8 +37,8 @@ def enviar_mensagem(webhook_url, mensagem):
     else:
         print(f"Erro ao enviar mensagem: {response.status_code} - {response.text}")
 
-# Exibe o título
-print(titulo)
+# Exibe o título centralizado e em azul
+print(colorir_texto_azul(centralizar_texto(titulo)))
 
 # Solicita o webhook do usuário
 webhook_url = input("Digite o webhook do Discord: ")
